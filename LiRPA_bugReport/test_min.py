@@ -11,6 +11,7 @@ from auto_LiRPA import BoundedModule, BoundedTensor, PerturbationLpNorm
 
 
 def main():
+    
     BATCH_SIZE = 4
 
     device = torch.device('cuda:0')
@@ -23,7 +24,6 @@ def main():
     backbone = resnet.ResNet18Gray()
     projector = LinearProjector(in_dim=512,out_dim=512)
     probe = LiRPA_Probe()
-
     model = torch.nn.Sequential(backbone,projector,probe)
 
     model=model.to(device)
@@ -43,7 +43,7 @@ def main():
 
             pred = model_bd(aud_ptbd)
 
-            lb_a,ub_a = model_bd.compute_bounds(x=(aud_ptbd,))
+            lb_a,ub_a = model_bd.compute_bounds(x=(aud_ptbd,)) #error occurs here
 
             print(f"{lb_a},{ub_a}\n")
 
